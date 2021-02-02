@@ -1,16 +1,26 @@
 import React from "react";
-import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
+import { Navbar, Nav, Form, FormControl, Button, Row } from "react-bootstrap";
+import SingleCard from "./SingleCard";
 
 class NavBar extends React.Component {
   state = {
     jobTitle: "",
     area: "",
+    results: [],
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(this.state);
+    console.log(this.state.jobTitle);
+    console.log(this.state.area);
   };
+  async componentDidMount() {
+    const response = await fetch(
+      `https://jobs.github.com/positions.json?description=${this.state.jobTitle}&location=${this.state.area}`
+    );
+    const json = await response.json();
+    this.setState({ jobTitle: this.state.jobTitle }, { area: this.state.area });
+  }
 
   render() {
     return (
@@ -48,6 +58,10 @@ class NavBar extends React.Component {
             </Form>
           </Navbar.Collapse>
         </Navbar>
+        <Row>
+          {this.state.results &&
+            this.state.results.map((item) => <SingleCard item={item} />)}
+        </Row>
       </div>
     );
   }
