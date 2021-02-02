@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { Card, Button, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default class SingleCard extends Component {
+  //   handleSubmit = (element) => {
+  //     element.preventDefault();
+  //     this.props.getJob(this.props.jobTitle);
+  //     this.props.history.push("/details/");
+  //   };
+
   render() {
     return (
       <div>
@@ -11,7 +18,14 @@ export default class SingleCard extends Component {
             <Card.Body>
               <Card.Title>{this.props.jobs.title}</Card.Title>
               <Card.Text> {this.props.jobs.location}</Card.Text>
-              <Button variant="primary">Details</Button>
+              <Link to={"/details/" + this.props.jobs.id}>
+                <Button
+                  variant="primary"
+                  //   onClick={(element) => this.handleSubmit(element)}
+                >
+                  Details
+                </Button>
+              </Link>
             </Card.Body>
           </Card>
         </Col>
