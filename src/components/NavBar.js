@@ -6,21 +6,38 @@ class NavBar extends React.Component {
   state = {
     jobTitle: "",
     area: "",
-    results: [],
+    jobs: [],
+  };
+
+  // fetch from the api with the data from the state
+  // save the data in the state
+
+  getResults = async (jobTitle, area) => {
+    try {
+      const response = await fetch(
+        `https://yabba-dabba-duls-cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${this.state.jobTitle}&location=${this.state.area}`
+      );
+      const data = await response.json();
+      console.log(data);
+
+      if (response.ok) {
+        this.setState({
+          ...this.state,
+          jobs: data,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
+    this.getResults(this.state.jobTitle, this.state.area);
+
     console.log(this.state.jobTitle);
     console.log(this.state.area);
   };
-  async componentDidMount() {
-    const response = await fetch(
-      `https://jobs.github.com/positions.json?description=${this.state.jobTitle}&location=${this.state.area}`
-    );
-    const json = await response.json();
-    this.setState({ jobTitle: this.state.jobTitle }, { area: this.state.area });
-  }
 
   render() {
     return (
@@ -59,8 +76,8 @@ class NavBar extends React.Component {
           </Navbar.Collapse>
         </Navbar>
         <Row>
-          {this.state.results &&
-            this.state.results.map((item) => <SingleCard item={item} />)}
+          {this.state.jobs &&
+            this.state.jobs.map((item) => <SingleCard item={item} />)}
         </Row>
       </div>
     );
