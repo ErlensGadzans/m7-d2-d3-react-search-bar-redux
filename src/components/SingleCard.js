@@ -10,11 +10,8 @@ export default class SingleCard extends Component {
             <Card.Img variant="top" src={this.props.jobs.company_logo} />
             <Card.Body>
               <Card.Title>{this.props.jobs.title}</Card.Title>
-              <Card.Text>
-                {" "}
-                {this.props.jobs.location}, {this.props.job.type}
-              </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
+              <Card.Text> {this.props.jobs.location}</Card.Text>
+              <Button variant="primary">Details</Button>
             </Card.Body>
           </Card>
         </Col>

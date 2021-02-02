@@ -35,8 +35,8 @@ class NavBar extends React.Component {
     event.preventDefault();
     this.getResults(this.state.jobTitle, this.state.area);
 
-    console.log(this.state.jobTitle);
-    console.log(this.state.area);
+    // console.log(this.state.jobTitle);
+    // console.log(this.state.area);
   };
 
   render() {
@@ -69,7 +69,11 @@ class NavBar extends React.Component {
                   this.setState({ area: event.target.value });
                 }}
               />
-              <Button variant="outline-success" type="submit">
+              <Button
+                variant="outline-success"
+                type="submit"
+                // onClick={this.getResults}
+              >
                 Search
               </Button>
             </Form>
@@ -77,7 +81,7 @@ class NavBar extends React.Component {
         </Navbar>
         <Row>
           {this.state.jobs &&
-            this.state.jobs.map((item) => <SingleCard item={item} />)}
+            this.state.jobs.map((jobs) => <SingleCard jobs={jobs} />)}
         </Row>
       </div>
     );
