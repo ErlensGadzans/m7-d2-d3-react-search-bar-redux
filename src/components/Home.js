@@ -1,5 +1,7 @@
-import React from "react";
-
+import React, { Component } from "react";
+import { Row } from "react-bootstrap";
+import SingleCard from "./SingleCard";
+import { connect } from "react-redux";
 /*
 
 
@@ -21,16 +23,20 @@ Form {
 }
 
 */
+const mapStateToProps = (state) => state;
 
 class Home extends Component {
-  state = {
-    job: "",
-    location: "",
-  };
-
   render() {
-    return <div></div>;
+    console.log(this.props);
+    return (
+      <Row>
+        {this.props.jobs &&
+          this.props.jobs.map((job) => (
+            <SingleCard key={new Date() + Math.random()} job={job} />
+          ))}
+      </Row>
+    );
   }
 }
 
-export default Home;
+export default connect(mapStateToProps)(Home);

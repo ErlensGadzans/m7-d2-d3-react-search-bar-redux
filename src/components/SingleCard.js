@@ -2,23 +2,17 @@ import React, { Component } from "react";
 import { Card, Button, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export default class SingleCard extends Component {
-  //   handleSubmit = (element) => {
-  //     element.preventDefault();
-  //     this.props.getJob(this.props.jobTitle);
-  //     this.props.history.push("/details/");
-  //   };
-
+class SingleCard extends Component {
   render() {
     return (
       <div>
         <Col xs={12} className="my-3">
           <Card style={{ width: "18rem" }}>
-            <Card.Img variant="top" src={this.props.jobs.company_logo} />
+            <Card.Img variant="top" src={this.props.job.company_logo} />
             <Card.Body>
-              <Card.Title>{this.props.jobs.title}</Card.Title>
-              <Card.Text> {this.props.jobs.location}</Card.Text>
-              <Link to={"/details/" + this.props.jobs.id}>
+              <Card.Title>{this.props.job.title}</Card.Title>
+              <Card.Text> {this.props.job.location}</Card.Text>
+              <Link to={"/details/" + this.props.job.id}>
                 <Button
                   variant="primary"
                   //   onClick={(element) => this.handleSubmit(element)}
@@ -33,3 +27,5 @@ export default class SingleCard extends Component {
     );
   }
 }
+
+export default SingleCard;

@@ -1,30 +1,32 @@
 import React from "react";
-import { Navbar, Nav, Form, FormControl, Button, Row } from "react-bootstrap";
-import SingleCard from "./SingleCard";
+import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  setJobsInStore: (jobs) => dispatch({ type: "SET_JOBS", payload: jobs }),
+});
 
 class NavBar extends React.Component {
+  // fetch from the api with the data from the state
+  // save the data in the state
+
   state = {
     jobTitle: "",
     area: "",
-    jobs: [],
   };
-
-  // fetch from the api with the data from the state
-  // save the data in the state
 
   getResults = async (jobTitle, area) => {
     try {
       const response = await fetch(
         `https://yabba-dabba-duls-cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?description=${this.state.jobTitle}&location=${this.state.area}`
       );
-      const data = await response.json();
-      console.log(data);
+      const jobs = await response.json();
+      console.log(jobs);
 
       if (response.ok) {
-        this.setState({
-          ...this.state,
-          jobs: data,
-        });
+        this.props.setJobsInStore(jobs);
       }
     } catch (error) {
       console.log(error);
@@ -79,13 +81,9 @@ class NavBar extends React.Component {
             </Form>
           </Navbar.Collapse>
         </Navbar>
-        <Row>
-          {this.state.jobs &&
-            this.state.jobs.map((jobs) => <SingleCard jobs={jobs} />)}
-        </Row>
       </div>
     );
   }
 }
 
-export default NavBar;
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
