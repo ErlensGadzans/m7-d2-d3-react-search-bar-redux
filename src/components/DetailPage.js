@@ -11,12 +11,17 @@ class DetailPage extends Component {
         <Container>
           <Row className="homepage2">
             <Col xs={12}>
-              <h1 className="jobTitle">{this.props.singleJob.title}</h1>
+              <img
+                src={this.props.singleJob.company_logo}
+                className="image"
+                alt={"logo"}
+              />
             </Col>
             <Col xs={12}>
-              <h4>
-                {this.props.singleJob.location}, {this.props.singleJob.type}
-              </h4>
+              <h3 className="jobTitle">{this.props.singleJob.title}</h3>
+            </Col>
+            <Col xs={12}>
+              <h4>{this.props.singleJob.location}</h4>
             </Col>
           </Row>
 
@@ -25,7 +30,10 @@ class DetailPage extends Component {
               xs={12}
               className="d-flex justify-content-center align-items-center"
             >
-              <h4>{this.props.singleJob.company}</h4>
+              <small>
+                <b>Descriprion:</b>
+                {this.props.singleJob.description}
+              </small>
             </Col>
           </Row>
         </Container>
