@@ -8,6 +8,12 @@ export const mainReducer = (state = initialState, action) => {
         jobs: action.payload,
       };
 
+    case "SINGLE_JOB":
+      return {
+        ...state,
+        singleJob: action.payload,
+      };
+
     default:
       return state;
   }

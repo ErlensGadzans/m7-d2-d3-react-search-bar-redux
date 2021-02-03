@@ -1,8 +1,21 @@
 import React, { Component } from "react";
 import { Card, Button, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
+const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  selectedJob: (job) => dispatch({ type: "SINGLE_JOB", payload: job }),
+});
 
 class SingleCard extends Component {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.selectedJob(this.props.job);
+    this.props.history.push("/details/");
+  };
+
   render() {
     return (
       <div>
@@ -12,14 +25,9 @@ class SingleCard extends Component {
             <Card.Body>
               <Card.Title>{this.props.job.title}</Card.Title>
               <Card.Text> {this.props.job.location}</Card.Text>
-              <Link to={"/details/" + this.props.job.id}>
-                <Button
-                  variant="primary"
-                  //   onClick={(element) => this.handleSubmit(element)}
-                >
-                  Details
-                </Button>
-              </Link>
+              <Button variant="primary" onClick={(e) => this.handleSubmit(e)}>
+                Details
+              </Button>
             </Card.Body>
           </Card>
         </Col>
@@ -28,4 +36,6 @@ class SingleCard extends Component {
   }
 }
 
-export default SingleCard;
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SingleCard)
+);
