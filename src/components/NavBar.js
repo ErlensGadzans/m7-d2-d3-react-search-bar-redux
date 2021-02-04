@@ -1,6 +1,7 @@
 import React from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state) => state;
 
@@ -45,11 +46,16 @@ class NavBar extends React.Component {
     return (
       <div className="container">
         <Navbar bg="light" expand="lg">
-          <Navbar.Brand href="#home">Job Search Bar</Navbar.Brand>
+          <Navbar.Brand onClick={() => this.props.history.push("/")}>
+            Job Search Bar
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="#home"></Nav.Link>
+              <Nav.Link onClick={() => this.props.history.push("/favorites/")}>
+                {" "}
+                Favorites
+              </Nav.Link>
               <Nav.Link href="#link"></Nav.Link>
             </Nav>
             <Form inline onSubmit={this.handleSubmit}>
@@ -86,4 +92,4 @@ class NavBar extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavBar));

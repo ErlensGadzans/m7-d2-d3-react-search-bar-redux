@@ -14,6 +14,20 @@ export const mainReducer = (state = initialState, action) => {
         singleJob: action.payload,
       };
 
+    case "ADD_FAVORITE":
+      return {
+        ...state,
+        listFavoriteJob: state.listFavoriteJob.concat(action.payload),
+      };
+
+    case "REMOVE_FAVORITE":
+      return {
+        ...state,
+        listFavoriteJob: [
+          ...state.listFavoriteJob.filter((job) => job.id !== action.payload),
+        ],
+      };
+
     default:
       return state;
   }

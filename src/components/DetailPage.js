@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => state;
+
+const mapDispatchToProps = (dispatch) => ({
+  favoriteJob: (job) => dispatch({ type: "ADD_FAVORITE", payload: job }),
+  notFavoriteJob: (id) => dispatch({ type: "REMOVE_FAVORITE", payload: id }),
+});
 
 class DetailPage extends Component {
   render() {
@@ -22,18 +27,25 @@ class DetailPage extends Component {
             </Col>
             <Col xs={12}>
               <h4>{this.props.singleJob.location}</h4>
-            </Col>
-          </Row>
-
-          <Row className="bg-colour-change2 ">
-            <Col
-              xs={12}
-              className="d-flex justify-content-center align-items-center"
-            >
-              <small>
-                <b>Descriprion:</b>
-                {this.props.singleJob.description}
-              </small>
+              {this.props.listFavoriteJob.find(
+                (job) => job.id === this.props.singleJob.id
+              ) ? (
+                <Button
+                  variant="danger"
+                  onClick={() =>
+                    this.props.notFavoriteJob(this.props.singleJob.id)
+                  }
+                >
+                  Remove from favourite
+                </Button>
+              ) : (
+                <Button
+                  variant="success"
+                  onClick={() => this.props.favoriteJob(this.props.singleJob)}
+                >
+                  Add to favourite
+                </Button>
+              )}
             </Col>
           </Row>
         </Container>
@@ -44,4 +56,4 @@ class DetailPage extends Component {
   }
 }
 
-export default connect(mapStateToProps)(DetailPage);
+export default connect(mapStateToProps, mapDispatchToProps)(DetailPage);
